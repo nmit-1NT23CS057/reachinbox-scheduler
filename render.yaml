@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: reachinbox-ui-preview
+    runtime: static
+    buildCommand: npm ci && npm run build --workspace frontend
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_STATIC_PREVIEW
+        value: "true"
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

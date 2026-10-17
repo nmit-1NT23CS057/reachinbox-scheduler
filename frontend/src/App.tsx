@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const STATIC_PREVIEW = import.meta.env.VITE_STATIC_PREVIEW === "true";
 
 type User = { id: string; name: string; email: string; avatarUrl: string | null };
 type EmailStatus = "SCHEDULED" | "PROCESSING" | "SENT" | "FAILED";
@@ -80,6 +81,10 @@ function App() {
   const pageSize = 50;
 
   useEffect(() => {
+    if (STATIC_PREVIEW) {
+      setAuthLoading(false);
+      return;
+    }
     api<{ user: User | null }>("/auth/me")
       .then(({ user: currentUser }) => setUser(currentUser))
       .catch((cause: unknown) => setError(cause instanceof Error ? cause.message : "Could not connect to API"))
@@ -191,10 +196,16 @@ function App() {
           <h1>Send with intention.</h1>
           <p className="login-copy">Plan your outreach, keep every send on track, and let your queue do the rest.</p>
           {error && <div className="alert error-alert">{error}</div>}
-          <a className="button google-button" href={`${API_URL}/auth/google`}>
-            <GoogleMark /> Continue with Google
-          </a>
-          <p className="login-footnote">Secure sign-in · Your emails stay yours</p>
+          {STATIC_PREVIEW
+            ? <button className="button google-button" disabled>Sign-in unavailable in this static preview</button>
+            : <a className="button google-button" href={`${API_URL}/auth/google`}>
+              <GoogleMark /> Continue with Google
+            </a>}
+          <p className="login-footnote">
+            {STATIC_PREVIEW
+              ? "This free preview hosts the dashboard UI only; scheduling requires the backend services."
+              : "Secure sign-in · Your emails stay yours"}
+          </p>
         </section>
         <span className="login-footer">REACHINBOX · EMAIL SCHEDULER</span>
       </main>

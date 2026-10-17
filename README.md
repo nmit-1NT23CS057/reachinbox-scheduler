@@ -78,6 +78,16 @@ A full-stack email scheduling demo built with TypeScript, Express, React, Postgr
 
 The development command starts three processes: the Express API, BullMQ worker, and Vite frontend.
 
+## Free Render UI preview
+
+The root `render.yaml` defines a free Render Static Site for previewing the login/branding UI. To deploy it:
+
+1. Push this repository to GitHub.
+2. In Render, choose **New → Blueprint**, connect the GitHub repository, and apply the `render.yaml` Blueprint.
+3. Wait for the static-site build and copy its `https://...onrender.com` URL into the submission form.
+
+This preview deliberately disables sign-in and does not connect to the API, worker, PostgreSQL, or Redis. It is not a working email scheduler. The complete application needs separately hosted backend services and correctly configured production OAuth callbacks; those services may incur charges.
+
 ## Configuration
 
 The complete variable list and development defaults are in `.env.example`. Important variables:
