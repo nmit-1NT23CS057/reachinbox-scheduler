@@ -246,10 +246,4 @@ docker-compose.yml
 .env.example
 ```
 
-## Assumptions and known gaps
 
-- The requirement mentions Elasticsearch; this implementation deliberately uses PostgreSQL search instead. Elasticsearch indexing and reindex/recovery behavior would need to be added to fully meet that requirement.
-- Slack OAuth and webhook delivery code are present, but the integration cannot be exercised without valid app credentials and an authorized Slack workspace.
-- The Figma design was unavailable for inspection during implementation.
-- Gmail SMTP is an optional demonstration path, not a production bulk-mail provider integration.
-- This repository is a hiring-assignment demo, not a complete multi-tenant production outreach platform.
